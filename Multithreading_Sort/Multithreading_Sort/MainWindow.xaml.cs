@@ -42,23 +42,32 @@ namespace Multithreading_Sort
 
         private void Sort_Click(object sender, RoutedEventArgs e)
         {
+            //Окно для отсортированного массива очищаем
             SortedArray.Text = null;
 
+            //Здесь проверяем чекбокс критической секции
             bool locking = (bool) Locker.IsChecked;
+            //Создаём семафор для синхронизации начала работы двух потоков, и пару семафоров для ожидания завершения каждого потока
+            //Изначально свободных мест - 0, а всего может быть - 2
             Semaphore starter = new Semaphore(0, 2);
             Semaphore bubble_output, selection_max_output;
+            //Здесь изначально - 0, всего соответственно по одному месту
             bubble_output = new Semaphore(0, 1);
             selection_max_output = new Semaphore(0, 1);
 
+            //Создадим объект нашего класса многопоточного сортировщика
             MThread_Sorter Sorter = new MThread_Sorter();
+            //Здесь создаём потоки и отдаём им функции которые они должны выполнить, через лямбды о которых я рассказывал
             Thread Bubble_Sort_Thread = new Thread(() => Sorter.Bubble_Sort(array, starter, bubble_output, locking));
             Thread Max_Sort_Thread = new Thread(() => Sorter.Selection_Max_Sort(array, starter, selection_max_output, locking));
             
+            //Запускаем их
             Max_Sort_Thread.Start();
             Bubble_Sort_Thread.Start();
 
 
             //starter.Release(2);
+            //Здесь ожидаем оба потока, прежде чем выводить результат
             bubble_output.WaitOne();
             selection_max_output.WaitOne();
            
