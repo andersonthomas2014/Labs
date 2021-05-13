@@ -21,11 +21,13 @@ namespace Multithreading_Sort
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    //Задача: 1.Отсортировать массив двумя разными методами одновременно и постараться поломать сортировку, затем восстановить используя критическую секцию
+    //        2.Синхронизировать одновременное начало работы методов и вывод результата с помощью семафоров 
     public partial class MainWindow : Window
     {
-        const int min = 0, max = 100;
+        const int max = 100;
 
-        public int[] array;
+        private int[] array;
          
         
 
@@ -42,38 +44,35 @@ namespace Multithreading_Sort
 
         private void Sort_Click(object sender, RoutedEventArgs e)
         {
-            //Окно для отсортированного массива очищаем
             SortedArray.Text = null;
-
-            //Здесь проверяем чекбокс критической секции
+            //Переменная, активирующая критическую секцию по чекбоксу
             bool locking = (bool) Locker.IsChecked;
-            //Создаём семафор для синхронизации начала работы двух потоков, и пару семафоров для ожидания завершения каждого потока
-            //Изначально свободных мест - 0, а всего может быть - 2
-            Semaphore starter = new Semaphore(0, 2);
+            //Первый семафор - синхронизация одновременной работы, следующие два - синхронизация вывода
+            Semaphore starter = new Semaphore(0, 1);
             Semaphore bubble_output, selection_max_output;
-            //Здесь изначально - 0, всего соответственно по одному месту
+       
             bubble_output = new Semaphore(0, 1);
             selection_max_output = new Semaphore(0, 1);
 
-            //Создадим объект нашего класса многопоточного сортировщика
-            MThread_Sorter Sorter = new MThread_Sorter();
-            //Здесь создаём потоки и отдаём им функции которые они должны выполнить, через лямбды о которых я рассказывал
-            Thread Bubble_Sort_Thread = new Thread(() => Sorter.Bubble_Sort(array, starter, bubble_output, locking));
+            //Класс-сортировщик, в котором инкапсулированы параметры для многопоточной сортировки
+            MThread_Sorter Sorter = new MThread_Sorter(array, starter, bubble_output, locking);
+            //Два новых потока, первый принимает функцию и использует параметры, инкапсулированные в класс
+            //Второй принимает функцию и параметры внутри анонимного метода, через лямбда-выражение
+            Thread Bubble_Sort_Thread = new Thread(Sorter.Bubble_Sort);
             Thread Max_Sort_Thread = new Thread(() => Sorter.Selection_Max_Sort(array, starter, selection_max_output, locking));
             
-            //Запускаем их
+
             Max_Sort_Thread.Start();
             Bubble_Sort_Thread.Start();
 
 
-            //starter.Release(2);
-            //Здесь ожидаем оба потока, прежде чем выводить результат
+            //Ожидание завершения выполнения обоих потоков
             bubble_output.WaitOne();
             selection_max_output.WaitOne();
            
 
             
-
+            //Вывод отсортированного массива
             for (int i = 0; i < array.Length; i++)
             {
                 SortedArray.Text += array[i] + " ";
@@ -82,16 +81,17 @@ namespace Multithreading_Sort
         }
 
        
-
+        //Генерация значений массива
         private void Generation_Click(object sender, RoutedEventArgs e)
         {
             GeneratedArray.Text = null;
 
             Random random = new Random();
             array = new int[Convert.ToInt32(Number.Text)];
+            
             for (int i = 0; i < array.Length; i++)
             {
-                array[i] = random.Next(min, max);
+                array[i] = random.Next(max);
                 GeneratedArray.Text += array[i] + " ";
             }
         }

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\home\\source\\repos\\Multithreading_Sort\\Multithreading_Sort\\Multithreading_Sort.csproj": {}
+    "C:\\Users\\home\\source\\GitHub\\Labs\\Multithreading_Sort\\Multithreading_Sort\\Multithreading_Sort.csproj": {}
   },
   "projects": {
-    "C:\\Users\\home\\source\\repos\\Multithreading_Sort\\Multithreading_Sort\\Multithreading_Sort.csproj": {
+    "C:\\Users\\home\\source\\GitHub\\Labs\\Multithreading_Sort\\Multithreading_Sort\\Multithreading_Sort.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\home\\source\\repos\\Multithreading_Sort\\Multithreading_Sort\\Multithreading_Sort.csproj",
+        "projectUniqueName": "C:\\Users\\home\\source\\GitHub\\Labs\\Multithreading_Sort\\Multithreading_Sort\\Multithreading_Sort.csproj",
         "projectName": "Multithreading_Sort",
-        "projectPath": "C:\\Users\\home\\source\\repos\\Multithreading_Sort\\Multithreading_Sort\\Multithreading_Sort.csproj",
+        "projectPath": "C:\\Users\\home\\source\\GitHub\\Labs\\Multithreading_Sort\\Multithreading_Sort\\Multithreading_Sort.csproj",
         "packagesPath": "C:\\Users\\home\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\home\\source\\repos\\Multithreading_Sort\\Multithreading_Sort\\obj\\",
+        "outputPath": "C:\\Users\\home\\source\\GitHub\\Labs\\Multithreading_Sort\\Multithreading_Sort\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Microsoft\\Xamarin\\NuGet\\"

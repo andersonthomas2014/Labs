@@ -16,7 +16,7 @@
         <TextBlock x:Name="SortedArray" HorizontalAlignment="Left" Height="414" TextWrapping="Wrap" VerticalAlignment="Center" Width="198" Grid.Column="1"/>
         <Button x:Name="Sort" Content="Sort" Grid.Column="1" HorizontalAlignment="Left" Height="41" Margin="412,217,0,0" VerticalAlignment="Top" Width="110"/>
         <TextBox x:Name="Number" Grid.Column="1" HorizontalAlignment="Left" Margin="407,92,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Text="30"/>
-        <CheckBox x:Name="Locker" Content="Locker" Grid.Column="1" HorizontalAlignment="Left" Margin="431,311,0,0" VerticalAlignment="Top" IsChecked="True"/>
+        <CheckBox x:Name="Locker" Content="Включить критическую секцию" Grid.Column="1" HorizontalAlignment="Left" Margin="382,315,0,0" VerticalAlignment="Top" IsChecked="False"/>
 
     </Grid>
 </Window>
